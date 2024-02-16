@@ -1,0 +1,27 @@
+def email_auto(text):
+    import smtplib
+    from email.mime.text import MIMEText 
+    from email.mime.multipart import MIMEMultipart 
+
+
+    # Set your email and App Password
+    username = 'sender email' 
+    app_password = 'your app password'  
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.ehlo()
+        smtp.login(username, app_password)
+
+        msg = MIMEMultipart()
+        msg['Subject'] = "Python Notification"
+        msg['From'] = username
+        msg.attach(MIMEText("text"))
+
+        #Replace with the recipient's email address
+        to = ["recipient email"]  
+
+        try:
+            smtp.sendmail(from_addr=username, to_addrs=to, msg=msg.as_string())
+            print("Email sent successfully")
+        except Exception as e:
+            print("Error sending email: ", e)
