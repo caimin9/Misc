@@ -1,0 +1,6 @@
+def dfFromURL(url, tableNumber=1):
+    soup = BeautifulSoup(requests.get(url).content, 'lxml') # Parse the HTML as a string
+    tables = soup.find_all('table')
+    # check table number is within number of tables on the page
+    assert len(tables) >= tableNumber
+    return pd.read_html(str(tables[tableNumber-1]))[0]
